@@ -1,0 +1,7 @@
+/*sass 文件测试引入*/
+.sass {
+    background: #555;
+    & > div {
+        background: #666;
+    }
+}

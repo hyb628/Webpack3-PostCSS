@@ -4,6 +4,8 @@ module.exports = {
     // 'postcss-import': {},
     'autoprefixer': {},
     'css-mqpacker': {},  // 多个媒体查询合并为一个 https://github.com/hail2u/node-css-mqpacker
+    // 'postcss-scss': {},
+    // 'postcss-less': {},
     'cssnano': {
       //  "zindex": false   // cssnano默认优化z-index 
     }  // CSS优化的插件包

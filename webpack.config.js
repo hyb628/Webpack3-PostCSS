@@ -6,6 +6,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 console.log('NODE_ENV',process.env.NODE_ENV);
 
+const extractCSS = new ExtractTextPlugin('css/[name]-one.css');
+const extractLESS = new ExtractTextPlugin('css/[name]-two.css');
+const extractSASS = new ExtractTextPlugin('css/[name]-three.css');
+
 var config = {
     entry: [
         // 多个入口文件 数组形式
@@ -48,19 +52,44 @@ var config = {
             //         'postcss-loader',
             //     ]),
             // }
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: ['style-loader'],
-                    use: ['css-loader?-autoprefixer&sourceMap=true&importLoaders=1', 'postcss-loader']
-                })
-            }
-
+   
             // 使用postcss方式， css 插入到DOM形式
             // {
             //     test: /\.css$/,
             //     use: [ 'style-loader', 'postcss-loader' ]
             // }
+            {
+                test: /\.less$/, 
+                use: extractLESS.extract({
+                    fallback: ['style-loader'],
+                    use: [
+                        'css-loader', 
+                        'postcss-loader',
+                        'less-loader', 
+                    ]
+                })
+            },
+            {
+                test: /\.scss$/, 
+                use: extractSASS.extract({
+                    fallback: ['style-loader'],
+                    use: [
+                        'css-loader', 
+                        'postcss-loader',
+                        'sass-loader', 
+                    ]
+                })
+            },
+            {
+                test: /\.css$/,
+                use: extractCSS.extract({
+                    fallback: ['style-loader'],
+                    use: [
+                        'css-loader?-autoprefixer&sourceMap=true&importLoaders=1', 
+                        'postcss-loader'
+                    ]
+                })
+            },
         ]
     },
     plugins: [
@@ -70,11 +99,15 @@ var config = {
             filename: 'index.html'
         }),
         // CSS生成单独的文件
-        new ExtractTextPlugin({
-            filename: 'css/[name][hash:8].css',
-            allChunks: true,
-            disable: false
-        })
+        // new ExtractTextPlugin({
+        //     filename: 'css/[name][hash:8].css',
+        //     allChunks: true,
+        //     disable: false
+        // })
+        extractCSS,
+        extractLESS,
+        extractSASS
+
         // new webpack.optimize.OccurenceOrderPlugin(),
         // new webpack.HotModuleReplacementPlugin(),
         // new webpack.NoErrorsPlugin(),
