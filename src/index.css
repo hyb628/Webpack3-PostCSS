@@ -1,0 +1,47 @@
+@import '../css/reset.css';
+html, body {
+    background: #fcf;
+    transition: all ease .4s;
+    box-shadow: 1px 0 0 rgba(red, green, blue, .5);
+    
+}
+div {
+    font-weight:normal;
+    display: flex;
+    -webkit-border-radius: 5px;
+            border-radius: 5px;
+    z-index: 1000;
+}
+/* 注释代码 */
+span {
+    font-weight: normal; 
+    margin-top: 1rem; 
+    margin-bottom: 2rem; 
+    margin-left: 1.5rem; 
+    margin-right: 2.5rem; 
+    font-weight: normal; 
+    padding: 1.75rem; 
+    width: calc(50rem - (2 * 1.75rem));
+    z-index: 100;
+}
+
+/* postcss 可以将多个媒体查询合并为一个*/
+.foo {
+  width: 240px;
+}
+
+@media screen and (min-width: 768px) {
+  .foo {
+    width: 576px;
+  }
+}
+
+.bar {
+  width: 160px;
+}
+
+@media screen and (min-width: 768px) {
+  .bar {
+    width: 384px;
+  }
+}

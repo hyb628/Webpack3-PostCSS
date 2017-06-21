@@ -1,0 +1,10 @@
+html, body {
+    background: #fcf;
+    transition: all ease .4s;
+    box-shadow: 1px 0 0 rgba(red, green, blue, .5);
+}
+
+div {
+    position: relative;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLGlCQUFpQjtJQUNqQix5QkFBeUI7SUFDekIsK0NBQStDO0NBQ2xEOztBQUVEO0lBQ0ksbUJBQW1CO0NBQ3RCIiwiZmlsZSI6InBvc3Rjc3MuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaHRtbCwgYm9keSB7XG4gICAgYmFja2dyb3VuZDogI2ZjZjtcbiAgICB0cmFuc2l0aW9uOiBhbGwgZWFzZSAuNHM7XG4gICAgYm94LXNoYWRvdzogMXB4IDAgMCByZ2JhKHJlZCwgZ3JlZW4sIGJsdWUsIC41KTtcbn1cblxuZGl2IHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG59Il19 */
