@@ -1,8 +1,10 @@
 var path = require('path');
 var fs = require('fs');
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 // var autoprefixer = require('autoprefixer');
+var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 console.log('NODE_ENV',process.env.NODE_ENV);
 
@@ -11,12 +13,13 @@ const extractLESS = new ExtractTextPlugin('css/[name]-two.css');
 const extractSASS = new ExtractTextPlugin('css/[name]-three.css');
 
 var config = {
-    entry: [
-        // 多个入口文件 数组形式
-        // 'webpack-hot-middleware/', 
-         path.resolve(__dirname, 'src/main.js'),
-         path.resolve(__dirname, 'src/index.js')
-    ],
+    entry: {
+        main: [
+            path.resolve(__dirname, 'src/main.js'),
+            path.resolve(__dirname, 'src/index.js')
+        ],
+        verdor: path.resolve(__dirname, 'src/verdor/verdor.js'),
+     },
     // entry: path.resolve(__filename, '../src/main.js'),
     output: {
        path: path.resolve(__filename, '../dist'),
@@ -111,11 +114,30 @@ var config = {
         // })
         extractCSS,
         extractLESS,
-        extractSASS
+        extractSASS,
 
         // new webpack.optimize.OccurenceOrderPlugin(),
         // new webpack.HotModuleReplacementPlugin(),
-        // new webpack.NoErrorsPlugin(),
+
+
+        // 用来跳过编译时出错的代码并记录，使编译后运行时的包不会发生错误
+        // * webpack3 NoEmitOnErrorsPlugin 已经 取代webpack 2 的 NoErrorsPlugin
+        new webpack.NoEmitOnErrorsPlugin(),
+        new FriendlyErrorsWebpackPlugin(),  //终端显示
+
+        new webpack.optimize.CommonsChunkPlugin({  // 提取公用JS代码插件
+            names: ["vendor"],
+            // ( 公共chunk(commnons chunk) 的名称)
+            filename: "commons.js",
+            // ( 公共chunk 的文件名)
+            minChunks: 3,
+            //(模块必须被3个 入口chunk 共享)
+            // CommonsChunkPlugin 可以通过传参minChunks来控制你希望重复出现几次的module 被提取出来打包。
+            // 也就是说你自己可以控制当一个模块被引入几次可以被打包到共用的chunk中，还可以规定如果这个公共模块小于一个值 minSize，
+            // 就不被提取出来这些都可以帮助你控制你想要的粒度。当你改的不是公共模块的代码，理论上webpack 打包的时候本来就不会影响其他代码。
+            // chunks: ["pageA", "pageB"],
+            // (只使用这些 入口chunk)
+        })
     ],
     // externals : {
     //     lodash : {

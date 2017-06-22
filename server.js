@@ -11,6 +11,7 @@ var compiler = webpack(config)
 
 // 使用 webpack-dev-middleware 中间件
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
+    quiet: true,
     publicPath: config.output.publicPath,
     stats: {
         colors: true,
