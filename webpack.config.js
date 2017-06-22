@@ -91,14 +91,9 @@ var config = {
                 })
             },
             {
-                test: /\.js[x]?$/,
-                enforce: 'pre',
-                use: [{
-                    loaders: ['babel-loader', 'eslint-loader']
-                    options: { fix: true }
-                }],
-                include: path.resolve(__dirname, './src/**/*.js'),
-                exclude: /node_modules/
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader",
             },
         ]
     },
@@ -121,7 +116,14 @@ var config = {
         // new webpack.optimize.OccurenceOrderPlugin(),
         // new webpack.HotModuleReplacementPlugin(),
         // new webpack.NoErrorsPlugin(),
-    ]
+    ],
+    // externals : {
+    //     lodash : {
+    //         commonjs: "lodash",
+    //         amd: "lodash",
+    //         root: "_" // indicates global variable
+    //     }
+    // }
 }
 
 module.exports = config;
