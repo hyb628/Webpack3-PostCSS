@@ -3,7 +3,7 @@ html, body {
     background: #fcf;
     transition: all ease .4s;
     box-shadow: 1px 0 0 rgba(red, green, blue, .5);
-    
+    background: url("./image/logoNew.gif");
 }
 div {
     font-weight:normal;
@@ -14,13 +14,13 @@ div {
 }
 /* 注释代码 */
 span {
-    font-weight: normal; 
-    margin-top: 1rem; 
-    margin-bottom: 2rem; 
-    margin-left: 1.5rem; 
-    margin-right: 2.5rem; 
-    font-weight: normal; 
-    padding: 1.75rem; 
+    font-weight: normal;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    margin-left: 1.5rem;
+    margin-right: 2.5rem;
+    font-weight: normal;
+    padding: 1.75rem;
     width: calc(50rem - (2 * 1.75rem));
     z-index: 100;
 }

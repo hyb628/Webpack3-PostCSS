@@ -23,6 +23,7 @@ var config = {
     // entry: path.resolve(__filename, '../src/main.js'),
     output: {
        path: path.resolve(__filename, '../dist'),
+       // publicPath: '/',
        filename: '[name].[hash:8].bundle.js',
         // webpack 允许你根据文件内容生成哈希值，只要用 [chunkhash] 替换 [hash] 就可以了
         // 不要在开发环境下使用 [chunkhash]，因为这会增加编译时间。将开发和生产模式的配置分开，并在开发模式中使用 [name].js 的文件名， 在生产模式中使用 [name].[chunkhash].js 文件名。
@@ -30,7 +31,7 @@ var config = {
         //    chunkFilename: '[id].[chunkhash].js'
     },
     // 生成.map文件
-    // devtool: 'source-map', 
+    // devtool: 'source-map',
     module: {
         rules: [
             // 加载JSON文件 使用json-loader
@@ -42,7 +43,7 @@ var config = {
             {
                 test: /\.json5$/,
                 use: 'json5-loader'
-            }, 
+            },
             // {
             //     test: /\.css$/,
             //     // 使用①生成的css文件 插入到html中
@@ -55,31 +56,31 @@ var config = {
             //         'postcss-loader',
             //     ]),
             // }
-   
+
             // 使用postcss方式， css 插入到DOM形式
             // {
             //     test: /\.css$/,
             //     use: [ 'style-loader', 'postcss-loader' ]
             // }
             {
-                test: /\.less$/, 
+                test: /\.less$/,
                 use: extractLESS.extract({
                     fallback: ['style-loader'],
                     use: [
-                        'css-loader', 
+                        'css-loader',
                         'postcss-loader',
-                        'less-loader', 
+                        'less-loader',
                     ]
                 })
             },
             {
-                test: /\.scss$/, 
+                test: /\.scss$/,
                 use: extractSASS.extract({
                     fallback: ['style-loader'],
                     use: [
-                        'css-loader', 
+                        'css-loader',
                         'postcss-loader',
-                        'sass-loader', 
+                        'sass-loader',
                     ]
                 })
             },
@@ -88,7 +89,7 @@ var config = {
                 use: extractCSS.extract({
                     fallback: ['style-loader'],
                     use: [
-                        'css-loader?-autoprefixer&sourceMap=true&importLoaders=1', 
+                        'css-loader?-autoprefixer&sourceMap=true&importLoaders=1',
                         'postcss-loader'
                     ]
                 })
@@ -97,6 +98,14 @@ var config = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: "babel-loader",
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: '[name].[hash:7].[ext]'
+                }
             },
         ]
     },
@@ -112,13 +121,10 @@ var config = {
         //     allChunks: true,
         //     disable: false
         // })
+
         extractCSS,
         extractLESS,
         extractSASS,
-
-        // new webpack.optimize.OccurenceOrderPlugin(),
-        // new webpack.HotModuleReplacementPlugin(),
-
 
         // 用来跳过编译时出错的代码并记录，使编译后运行时的包不会发生错误
         // * webpack3 NoEmitOnErrorsPlugin 已经 取代webpack 2 的 NoErrorsPlugin
@@ -137,7 +143,10 @@ var config = {
             // 就不被提取出来这些都可以帮助你控制你想要的粒度。当你改的不是公共模块的代码，理论上webpack 打包的时候本来就不会影响其他代码。
             // chunks: ["pageA", "pageB"],
             // (只使用这些 入口chunk)
-        })
+        }),
+
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
     ],
     // externals : {
     //     lodash : {

@@ -9,5 +9,4 @@ function testES6 (str) {
     str.map(n => n ** 2);
     return Array.from(new Set(str));
 }
-
 testES6([1, 2, 3, 5, 3, 2, 1]);
