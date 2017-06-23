@@ -1,37 +1,22 @@
-// 引入必要的模块
-var express = require('express')
-var webpack = require('webpack')
-var config = require('./webpack.config.js')
+var express = require('express'),
+    webpack = require('webpack'),
+    config= require('./webpack.config.js'),
+    app = express();
+    // config.entry.main.unshift("webpack-dev-server/client?http://localhost:9000/", "webpack/hot/dev-server");
 
-// 创建一个express实例
-var app = express()
+var compiler = webpack(config);
 
-// 调用webpack并把配置传递过去
-var compiler = webpack(config)
+compiler.apply(new webpack.ProgressPlugin());
+// app.use(require('connect-history-api-fallback')());
+app.use(require('webpack-dev-middleware')(compiler, {
+    hot: true,
+    noInfo: true,
+    reload: true,
+    publicPath: config.output.publicPath
+}));
 
-// 使用 webpack-dev-middleware 中间件
-var devMiddleware = require('webpack-dev-middleware')(compiler, {
-    quiet: true,
-    publicPath: config.output.publicPath,
-    stats: {
-        colors: true,
-        chunks: false
-    }
-})
+app.use(require('webpack-hot-middleware')(compiler));
 
-// 使用 webpack-hot-middleware 中间件
-var hotMiddleware = require('webpack-hot-middleware')(compiler)
-
-// 注册中间件
-app.use(devMiddleware)
-// 注册中间件
-app.use(hotMiddleware)
-
-// 监听 8888端口，开启服务器
-app.listen(8888, function (err) {
-    if (err) {
-        console.log(err)
-        return
-    }
-    console.log('Listening at http://localhost:8888')
-})
+app.listen(9000, '127.0.0.1', function(err) {
+    err && console.log(err);
+});

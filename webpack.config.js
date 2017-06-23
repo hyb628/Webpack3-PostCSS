@@ -17,7 +17,9 @@ var config = {
             path.resolve(__dirname, 'src/main.js'),
             path.resolve(__dirname, 'src/index.js')
         ],
-        verdor: path.resolve(__dirname, 'src/verdor/verdor.js'),
+        verdor: [
+            path.resolve(__dirname, 'src/verdor/verdor.js'),
+        ]
      },
     // entry: path.resolve(__filename, '../src/main.js'),
     output: {
@@ -146,10 +148,7 @@ var config = {
 
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-    ],
-    externals : {
-
-    }
+    ]
 }
 
 module.exports = config;
