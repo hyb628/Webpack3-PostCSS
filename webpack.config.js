@@ -3,7 +3,6 @@ var fs = require('fs');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-// var autoprefixer = require('autoprefixer');
 var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 console.log('NODE_ENV',process.env.NODE_ENV);
@@ -23,7 +22,7 @@ var config = {
     // entry: path.resolve(__filename, '../src/main.js'),
     output: {
        path: path.resolve(__filename, '../dist'),
-       // publicPath: '/',
+       publicPath: '/',
        filename: '[name].[hash:8].bundle.js',
         // webpack 允许你根据文件内容生成哈希值，只要用 [chunkhash] 替换 [hash] 就可以了
         // 不要在开发环境下使用 [chunkhash]，因为这会增加编译时间。将开发和生产模式的配置分开，并在开发模式中使用 [name].js 的文件名， 在生产模式中使用 [name].[chunkhash].js 文件名。
@@ -146,15 +145,11 @@ var config = {
         }),
 
         new webpack.optimize.OccurrenceOrderPlugin(),
-        // new webpack.HotModuleReplacementPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
     ],
-    // externals : {
-    //     lodash : {
-    //         commonjs: "lodash",
-    //         amd: "lodash",
-    //         root: "_" // indicates global variable
-    //     }
-    // }
+    externals : {
+
+    }
 }
 
 module.exports = config;
