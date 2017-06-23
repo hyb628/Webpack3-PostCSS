@@ -41,7 +41,7 @@ app.get("/multientry", function(req, res) {
 
 if (require.main === module) {
     var server = http.createServer(app);
-    server.listen(process.env.PORT || 1616, function() {
+    server.listen(process.env.PORT || 3000, function() {
         console.log("Listening on %j", server.address());
     });
 }
