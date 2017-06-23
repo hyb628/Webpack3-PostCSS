@@ -14,6 +14,8 @@ const extractSASS = new ExtractTextPlugin('css/[name]-three.css');
 var config = {
     entry: {
         main: [
+            'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true',
+            'webpack/hot/dev-server',
             path.resolve(__dirname, 'src/main.js'),
             path.resolve(__dirname, 'src/index.js')
         ],
@@ -58,11 +60,11 @@ var config = {
             //     ]),
             // }
 
-            // 使用postcss方式， css 插入到DOM形式
+            // 使用postcss方式， css 插入到DOM形式 ， 支持热更新
             // {
             //     test: /\.css$/,
-            //     use: [ 'style-loader', 'postcss-loader' ]
-            // }
+            //     use: [ 'style-loader', 'css-loader',  'postcss-loader' ]
+            // },
             {
                 test: /\.less$/,
                 use: extractLESS.extract({
@@ -85,12 +87,14 @@ var config = {
                     ]
                 })
             },
+            // ExtractTextPlugin 提取了样式出来， 官方说No Hot Module Replacement。
+            // https://github.com/webpack-contrib/extract-text-webpack-plugin/blob/webpack-1/README.md
             {
                 test: /\.css$/,
                 use: extractCSS.extract({
                     fallback: ['style-loader'],
                     use: [
-                        'css-loader?-autoprefixer&sourceMap=true&importLoaders=1',
+                        'css-loader',
                         'postcss-loader'
                     ]
                 })
@@ -107,7 +111,7 @@ var config = {
                     limit: 10000,
                     name: '[name].[hash:7].[ext]'
                 }
-            },
+            }
         ]
     },
     plugins: [

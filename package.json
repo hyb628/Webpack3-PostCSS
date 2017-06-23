@@ -42,6 +42,7 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
     "lodash": "^4.17.4",
+    "morgan": "^1.8.2",
     "node-sass": "^4.5.3",
     "postcss-cssnext": "^2.11.0",
     "postcss-import": "^10.0.0",

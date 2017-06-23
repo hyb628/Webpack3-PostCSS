@@ -1,22 +1,47 @@
-var express = require('express'),
-    webpack = require('webpack'),
-    config= require('./webpack.config.js'),
-    app = express();
-    // config.entry.main.unshift("webpack-dev-server/client?http://localhost:9000/", "webpack/hot/dev-server");
+var http = require('http');
 
-var compiler = webpack(config);
+var express = require('express');
 
-compiler.apply(new webpack.ProgressPlugin());
-// app.use(require('connect-history-api-fallback')());
-app.use(require('webpack-dev-middleware')(compiler, {
-    hot: true,
-    noInfo: true,
-    reload: true,
-    publicPath: config.output.publicPath
-}));
+var app = express();
 
-app.use(require('webpack-hot-middleware')(compiler));
+app.use(require('morgan')('short'));
 
-app.listen(9000, '127.0.0.1', function(err) {
-    err && console.log(err);
+// ************************************
+// This is the real meat of the example
+// ************************************
+(function() {
+
+    // Step 1: Create & configure a webpack compiler
+    var webpack = require('webpack');
+    var webpackConfig = require(process.env.WEBPACK_CONFIG ? process.env.WEBPACK_CONFIG : './webpack.config');
+    var compiler = webpack(webpackConfig);
+
+    // Step 2: Attach the dev middleware to the compiler & the server
+    app.use(require("webpack-dev-middleware")(compiler, {
+        noInfo: true,
+        publicPath: webpackConfig.output.publicPath
+    }));
+
+    // Step 3: Attach the hot middleware to the compiler & the server
+    app.use(require("webpack-hot-middleware")(compiler, {
+        hot: true,
+        log: console.log,
+        path: '/__webpack_hmr', heartbeat: 10 * 1000
+    }));
+})();
+
+// Do anything you like with the rest of your express application.
+
+app.get("/", function(req, res) {
+    res.sendFile(__dirname + '/index.html');
 });
+app.get("/multientry", function(req, res) {
+    res.sendFile(__dirname + '/index-multientry.html');
+});
+
+if (require.main === module) {
+    var server = http.createServer(app);
+    server.listen(process.env.PORT || 1616, function() {
+        console.log("Listening on %j", server.address());
+    });
+}
