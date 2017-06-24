@@ -14,6 +14,7 @@ const extractSASS = new ExtractTextPlugin('css/[name]-three.css');
 var config = {
     entry: {
         main: [
+            // 'babel-polyfill',
             'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true',
             'webpack/hot/dev-server',
             path.resolve(__dirname, 'src/main.js'),
@@ -22,12 +23,12 @@ var config = {
         verdor: [
             path.resolve(__dirname, 'src/verdor/verdor.js'),
         ]
-     },
+    },
     // entry: path.resolve(__filename, '../src/main.js'),
     output: {
-       path: path.resolve(__filename, '../dist'),
-       publicPath: '/',
-       filename: '[name].[hash:8].bundle.js',
+        path: path.resolve(__filename, '../dist'),
+        publicPath: '/',
+        filename: '[name].[hash:8].bundle.js',
         // webpack 允许你根据文件内容生成哈希值，只要用 [chunkhash] 替换 [hash] 就可以了
         // 不要在开发环境下使用 [chunkhash]，因为这会增加编译时间。将开发和生产模式的配置分开，并在开发模式中使用 [name].js 的文件名， 在生产模式中使用 [name].[chunkhash].js 文件名。
         //    publicPath: '/',
