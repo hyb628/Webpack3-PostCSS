@@ -38,11 +38,14 @@ var config = {
     // devtool: 'source-map',
     module: {
         rules: [
-            // 加载JSON文件 使用json-loader
-            {
-                test: /\.json$/,
-                use: 'json-loader'
-            },
+            // 加载JSON文件 使用json-loader webpack1
+            // wenpack2 + ,json-loader 不再需要手动添加
+            // [官方: 是为了消除 webpack、 node.js 和 browserify 之间的环境差异。 https://github.com/webpack/webpack/issues/3363]
+            // {
+            //     test: /\.json$/,
+            //     use: 'json-loader'
+            // },
+
             // 处理 .json5结尾的文件
             {
                 test: /\.json5$/,
@@ -151,8 +154,10 @@ var config = {
             // (只使用这些 入口chunk)
         }),
 
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+        // OccurrenceOrderPlugin 现在默认启用，并已重命名（在 webpack 1 中为 OccurenceOrderPlugin）。 因此，请确保从您的配置中删除该插件：
+        // OccurrenceOrderPlugin is now on by default
+        // new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin()
     ]
 }
 
