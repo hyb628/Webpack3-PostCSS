@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./dist  && cross-env NODE_ENV=production webpack --progress --config webpack.config.js ",
+    "build": "npm run clean  && cross-env NODE_ENV=production webpack --progress --config webpack.config.js",
     "start": "cross-env NODE_ENV=development supervisor server.js",
     "lint": "eslint --ext .js src",
-    "clean": "rimraf ./dist"
+    "clean": "rimraf ./dist",
+    "build:tar": "npm run build && tar -czvf bundle.tar.gz ./dist",
+     "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -42,6 +44,7 @@
     "file-loader": "^0.11.2",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.28.0",
+    "jest": "^20.0.4",
     "json-loader": "^0.5.4",
     "json5-loader": "^1.0.1",
     "less": "^2.7.2",

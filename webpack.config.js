@@ -76,7 +76,7 @@ var config = {
                     use: [
                         'css-loader',
                         'postcss-loader',
-                        'less-loader',
+                        'less-loader'
                     ]
                 })
             },
@@ -87,7 +87,7 @@ var config = {
                     use: [
                         'css-loader',
                         'postcss-loader',
-                        'sass-loader',
+                        'sass-loader'
                     ]
                 })
             },
@@ -104,17 +104,31 @@ var config = {
                 })
             },
             {
-                test: /\.js$/,
+                test: /\.js(x)*$/,
                 exclude: /node_modules/,
-                loader: "babel-loader",
+                loader: 'babel-loader'
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
-                    name: '[name].[hash:7].[ext]'
+                    limit: 8000,
+                    name: 'image/[name].[hash:7].[ext]'
                 }
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 8000,
+                    name: 'font/[name].[hash:7].[ext]'
+                }
+            },
+            // 手写一个简单的webpack loader
+            // 处理 .huangyb 后缀的文件
+            {
+                test: /\.huangyb$/,
+                loader: 'huangyb-loader'
             }
         ]
     },
@@ -122,7 +136,12 @@ var config = {
         // 生成html文件，里面的JS文件 src 地址自动添加hash
         new HtmlWebpackPlugin({
             title: 'huangyb',
-            filename: 'index.html'
+            favicon: './src/image/logoNew.gif',
+            filename: 'index.html',
+            minify:{
+                removeComments: true, // 删除注释
+                collapseWhitespace: true // 删除空格
+            }
         }),
         // CSS生成单独的文件
         // new ExtractTextPlugin({
@@ -138,19 +157,19 @@ var config = {
         // 用来跳过编译时出错的代码并记录，使编译后运行时的包不会发生错误
         // * webpack3 NoEmitOnErrorsPlugin 已经 取代webpack 2 的 NoErrorsPlugin
         new webpack.NoEmitOnErrorsPlugin(),
-        new FriendlyErrorsWebpackPlugin(),  //终端显示
+        new FriendlyErrorsWebpackPlugin(), // 终端显示
 
-        new webpack.optimize.CommonsChunkPlugin({  // 提取公用JS代码插件
-            names: ["vendor"],
+        new webpack.optimize.CommonsChunkPlugin({ // 提取公用JS代码插件
+            names: ['vendor'],
             // ( 公共chunk(commnons chunk) 的名称)
-            filename: "commons.js",
+            filename: 'commons.js',
             // ( 公共chunk 的文件名)
-            minChunks: 3,
-            //(模块必须被3个 入口chunk 共享)
+            minChunks: 3
+            // (模块必须被3个 入口chunk 共享)
             // CommonsChunkPlugin 可以通过传参minChunks来控制你希望重复出现几次的module 被提取出来打包。
             // 也就是说你自己可以控制当一个模块被引入几次可以被打包到共用的chunk中，还可以规定如果这个公共模块小于一个值 minSize，
             // 就不被提取出来这些都可以帮助你控制你想要的粒度。当你改的不是公共模块的代码，理论上webpack 打包的时候本来就不会影响其他代码。
-            // chunks: ["pageA", "pageB"],
+            // chunks: ['pageA', 'pageB'],
             // (只使用这些 入口chunk)
         }),
 
@@ -159,6 +178,11 @@ var config = {
         // new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ]
+    // resolve: {
+    //     alias: {
+    //         huangImg: path.resolve(__dirname, 'src/image/')
+    //     }
+    // }
 }
 
 module.exports = config;
