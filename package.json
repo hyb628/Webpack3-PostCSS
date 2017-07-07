@@ -9,7 +9,7 @@
     "lint": "eslint --ext .js src",
     "clean": "rimraf ./dist",
     "build:tar": "npm run build && tar -czvf bundle.tar.gz ./dist",
-     "test": "jest"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -31,7 +31,7 @@
     "css-loader": "^0.28.4",
     "css-mqpacker": "^6.0.1",
     "cssnano": "^3.10.0",
-    "eslint": "^4.0.0",
+    "eslint": "^4.1.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-plugin-html": "^3.0.0",

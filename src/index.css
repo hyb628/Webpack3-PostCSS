@@ -3,8 +3,8 @@ html, body {
     background: #fcf;
     transition: all ease .4s;
     box-shadow: 1px 0 0 rgba(0, 0, 0, .5);
-    /*background: url("./image/logoNew.gif");*/
-    background: url("./image/a.jpg");
+    background: url("./image/logoNew.gif");
+    /*background: url("./image/a.jpg");*/
 }
 div {
     font-weight:normal;
